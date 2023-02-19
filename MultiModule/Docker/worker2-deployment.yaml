@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.27.0 (HEAD)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: worker2
+  name: worker2
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      io.kompose.service: worker2
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert
+        kompose.version: 1.27.0 (HEAD)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: worker2
+    spec:
+      containers:
+        - env:
+            - name: KAFKA_ADDRESS
+              value: b-1.boehmerkafkacluster.id3u3z.c3.kafka.eu-central-1.amazonaws.com:9092,b-2.boehmerkafkacluster.id3u3z.c3.kafka.eu-central-1.amazonaws.com:9092
+            - name: ZEEBE_ADDRESS
+              value: zeebe-zeebe-gateway:26500
+          image: l3oehmer/worker2
+          name: worker2
+          ports:
+            - containerPort: 26500
+            - containerPort: 9092
+            - containerPort: 443
+          resources: {}
+      restartPolicy: Always
+status: {}

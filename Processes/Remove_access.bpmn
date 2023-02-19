@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_05tndzc" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.2.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.0.0">
+  <bpmn:process id="Process_0zmnne0" name="Access removal " isExecutable="true">
+    <bpmn:documentation>Process for removing existing Access rights</bpmn:documentation>
+    <bpmn:endEvent id="Event_12j3g4z">
+      <bpmn:incoming>Flow_1p4ah5e</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:serviceTask id="Activity_0j618a0" name="Remove access rights">
+      <bpmn:incoming>Flow_1ndcj0g</bpmn:incoming>
+      <bpmn:outgoing>Flow_1p4ah5e</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="Activity_131wzyk" name="Check existing Access rights">
+      <bpmn:extensionElements>
+        <zeebe:ioMapping>
+          <zeebe:output source="=access_rights" target="access_rights" />
+        </zeebe:ioMapping>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0eanktz</bpmn:incoming>
+      <bpmn:outgoing>Flow_1ndcj0g</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:startEvent id="Event_0z4covx" name="Share Request">
+      <bpmn:outgoing>Flow_0eanktz</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_1p4ah5e" sourceRef="Activity_0j618a0" targetRef="Event_12j3g4z" />
+    <bpmn:sequenceFlow id="Flow_1ndcj0g" sourceRef="Activity_131wzyk" targetRef="Activity_0j618a0" />
+    <bpmn:sequenceFlow id="Flow_0eanktz" sourceRef="Event_0z4covx" targetRef="Activity_131wzyk" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_0zmnne0">
+      <bpmndi:BPMNEdge id="Flow_1p4ah5e_di" bpmnElement="Flow_1p4ah5e">
+        <di:waypoint x="540" y="120" />
+        <di:waypoint x="592" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1ndcj0g_di" bpmnElement="Flow_1ndcj0g">
+        <di:waypoint x="370" y="120" />
+        <di:waypoint x="440" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0eanktz_di" bpmnElement="Flow_0eanktz">
+        <di:waypoint x="208" y="120" />
+        <di:waypoint x="270" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Event_0z4covx_di" bpmnElement="Event_0z4covx">
+        <dc:Bounds x="172" y="102" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="154" y="145" width="74" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_041u3mu_di" bpmnElement="Activity_131wzyk">
+        <dc:Bounds x="270" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_11a98y2_di" bpmnElement="Activity_0j618a0">
+        <dc:Bounds x="440" y="80" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_12j3g4z_di" bpmnElement="Event_12j3g4z">
+        <dc:Bounds x="592" y="102" width="36" height="36" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

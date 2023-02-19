@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_0zhpwe6" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.6.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.0.0">
+  <bpmn:process id="Delete_data" name="Delete data" isExecutable="true">
+    <bpmn:serviceTask id="Check_access_rights" name="Check access rights">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="Check_access_rights" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_06fu3s0</bpmn:incoming>
+      <bpmn:outgoing>Flow_03mnz13</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_10yrsy8" sourceRef="Event_0q3bxwk" targetRef="Check_access_validity" />
+    <bpmn:serviceTask id="Check_access_validity" name="Check request validity">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="Check_request_validity" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_10yrsy8</bpmn:incoming>
+      <bpmn:outgoing>Flow_06fu3s0</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_06fu3s0" sourceRef="Check_access_validity" targetRef="Check_access_rights" />
+    <bpmn:serviceTask id="Activity_0uwzsjb" name="Delete Data">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="Delete_data" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_03mnz13</bpmn:incoming>
+      <bpmn:outgoing>Flow_1cgsezx</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_1cgsezx" sourceRef="Activity_0uwzsjb" targetRef="Event_0wmvx4j" />
+    <bpmn:endEvent id="Event_0wmvx4j">
+      <bpmn:incoming>Flow_1cgsezx</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:startEvent id="Event_0q3bxwk" name="Delete data Request">
+      <bpmn:outgoing>Flow_10yrsy8</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:subProcess id="Activity_1hyumyq" triggeredByEvent="true">
+      <bpmn:serviceTask id="Handle_errors" name="Handle errors">
+        <bpmn:extensionElements>
+          <zeebe:taskDefinition type="Handle_errors" />
+        </bpmn:extensionElements>
+        <bpmn:incoming>Flow_0hgu1ib</bpmn:incoming>
+        <bpmn:outgoing>Flow_0ukz192</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:endEvent id="Event_0k34w4m">
+        <bpmn:incoming>Flow_0ukz192</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:startEvent id="Event_0euzvri">
+        <bpmn:outgoing>Flow_0hgu1ib</bpmn:outgoing>
+        <bpmn:errorEventDefinition id="ErrorEventDefinition_0ddttlr" errorRef="Error_0tdhwq6" />
+      </bpmn:startEvent>
+      <bpmn:sequenceFlow id="Flow_0hgu1ib" sourceRef="Event_0euzvri" targetRef="Handle_errors" />
+      <bpmn:sequenceFlow id="Flow_0ukz192" sourceRef="Handle_errors" targetRef="Event_0k34w4m" />
+    </bpmn:subProcess>
+    <bpmn:sequenceFlow id="Flow_03mnz13" sourceRef="Check_access_rights" targetRef="Activity_0uwzsjb" />
+  </bpmn:process>
+  <bpmn:error id="Error_0tdhwq6" name="General_Error" errorCode="General_Error" />
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Delete_data">
+      <bpmndi:BPMNShape id="Activity_1dbe9fy_di" bpmnElement="Check_access_rights">
+        <dc:Bounds x="410" y="367" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0w6al1g_di" bpmnElement="Check_access_validity">
+        <dc:Bounds x="254" y="367" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_077y8oa_di" bpmnElement="Activity_0uwzsjb">
+        <dc:Bounds x="570" y="367" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0rh32qo_di" bpmnElement="Event_0wmvx4j">
+        <dc:Bounds x="732" y="389" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0avtjg4_di" bpmnElement="Event_0q3bxwk">
+        <dc:Bounds x="162" y="389" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="152" y="432" width="57" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1d8eejh_di" bpmnElement="Activity_1hyumyq" isExpanded="true">
+        <dc:Bounds x="485" y="80" width="530" height="200" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0zv7ine_di" bpmnElement="Handle_errors">
+        <dc:Bounds x="665" y="140" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0k34w4m_di" bpmnElement="Event_0k34w4m">
+        <dc:Bounds x="877" y="162" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1o1pcec_di" bpmnElement="Event_0euzvri">
+        <dc:Bounds x="525" y="162" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0hgu1ib_di" bpmnElement="Flow_0hgu1ib">
+        <di:waypoint x="561" y="180" />
+        <di:waypoint x="665" y="180" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0ukz192_di" bpmnElement="Flow_0ukz192">
+        <di:waypoint x="765" y="180" />
+        <di:waypoint x="877" y="180" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_10yrsy8_di" bpmnElement="Flow_10yrsy8">
+        <di:waypoint x="198" y="407" />
+        <di:waypoint x="254" y="407" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_06fu3s0_di" bpmnElement="Flow_06fu3s0">
+        <di:waypoint x="354" y="407" />
+        <di:waypoint x="410" y="407" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1cgsezx_di" bpmnElement="Flow_1cgsezx">
+        <di:waypoint x="670" y="407" />
+        <di:waypoint x="732" y="407" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_03mnz13_di" bpmnElement="Flow_03mnz13">
+        <di:waypoint x="510" y="407" />
+        <di:waypoint x="570" y="407" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

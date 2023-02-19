@@ -1,0 +1,42 @@
+<component name="libraryTable">
+  <library name="software.amazon.awssdk.rdsdata" type="repository">
+    <properties maven-id="software.amazon.awssdk:rdsdata:2.17.243" />
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/software/amazon/awssdk/rdsdata/2.17.243/rdsdata-2.17.243.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/software/amazon/awssdk/protocol-core/2.17.243/protocol-core-2.17.243.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/software/amazon/awssdk/aws-json-protocol/2.17.243/aws-json-protocol-2.17.243.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/software/amazon/awssdk/third-party-jackson-core/2.17.243/third-party-jackson-core-2.17.243.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/software/amazon/awssdk/json-utils/2.17.243/json-utils-2.17.243.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/software/amazon/awssdk/sdk-core/2.17.243/sdk-core-2.17.243.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/software/amazon/awssdk/profiles/2.17.243/profiles-2.17.243.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/slf4j/slf4j-api/1.7.30/slf4j-api-1.7.30.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/reactivestreams/reactive-streams/1.0.3/reactive-streams-1.0.3.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/software/amazon/awssdk/auth/2.17.243/auth-2.17.243.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/software/amazon/eventstream/eventstream/1.0.1/eventstream-1.0.1.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/software/amazon/awssdk/http-client-spi/2.17.243/http-client-spi-2.17.243.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/software/amazon/awssdk/regions/2.17.243/regions-2.17.243.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/software/amazon/awssdk/annotations/2.17.243/annotations-2.17.243.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/software/amazon/awssdk/utils/2.17.243/utils-2.17.243.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/software/amazon/awssdk/aws-core/2.17.243/aws-core-2.17.243.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/software/amazon/awssdk/metrics-spi/2.17.243/metrics-spi-2.17.243.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/software/amazon/awssdk/apache-client/2.17.243/apache-client-2.17.243.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/apache/httpcomponents/httpclient/4.5.13/httpclient-4.5.13.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/commons-logging/commons-logging/1.2/commons-logging-1.2.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/commons-codec/commons-codec/1.11/commons-codec-1.11.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/apache/httpcomponents/httpcore/4.4.13/httpcore-4.4.13.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/software/amazon/awssdk/netty-nio-client/2.17.243/netty-nio-client-2.17.243.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/io/netty/netty-codec-http/4.1.77.Final/netty-codec-http-4.1.77.Final.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/io/netty/netty-codec-http2/4.1.77.Final/netty-codec-http2-4.1.77.Final.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/io/netty/netty-codec/4.1.77.Final/netty-codec-4.1.77.Final.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/io/netty/netty-transport/4.1.77.Final/netty-transport-4.1.77.Final.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/io/netty/netty-resolver/4.1.77.Final/netty-resolver-4.1.77.Final.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/io/netty/netty-common/4.1.77.Final/netty-common-4.1.77.Final.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/io/netty/netty-buffer/4.1.77.Final/netty-buffer-4.1.77.Final.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/io/netty/netty-handler/4.1.77.Final/netty-handler-4.1.77.Final.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/io/netty/netty-transport-classes-epoll/4.1.77.Final/netty-transport-classes-epoll-4.1.77.Final.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/io/netty/netty-transport-native-unix-common/4.1.77.Final/netty-transport-native-unix-common-4.1.77.Final.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

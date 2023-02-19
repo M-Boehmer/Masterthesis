@@ -1,0 +1,402 @@
+{
+  "ModelName": "Electronic patient record",
+  "ModelMetadata": {
+    "Author": "Marvin Boehmer",
+    "DateCreated": "Sep 27, 2022, 02:29 PM",
+    "DateLastModified": "Sep 27, 2022, 03:56 PM",
+    "Description": "",
+    "AWSService": "Amazon DynamoDB",
+    "Version": "3.0"
+  },
+  "DataModel": [
+    {
+      "TableName": "Vaccination",
+      "KeyAttributes": {
+        "PartitionKey": {
+          "AttributeName": "PatientID",
+          "AttributeType": "N"
+        },
+        "SortKey": {
+          "AttributeName": "VaccinationID",
+          "AttributeType": "N"
+        }
+      },
+      "NonKeyAttributes": [
+        {
+          "AttributeName": "Date",
+          "AttributeType": "S"
+        },
+        {
+          "AttributeName": "Manufacturer",
+          "AttributeType": "S"
+        },
+        {
+          "AttributeName": "Batch Nr",
+          "AttributeType": "S"
+        },
+        {
+          "AttributeName": "Tetanus",
+          "AttributeType": "BOOL"
+        },
+        {
+          "AttributeName": "Diphtheria",
+          "AttributeType": "BOOL"
+        },
+        {
+          "AttributeName": "Pertussis",
+          "AttributeType": "BOOL"
+        },
+        {
+          "AttributeName": "Influenza b",
+          "AttributeType": "BOOL"
+        },
+        {
+          "AttributeName": "Hepatitis B",
+          "AttributeType": "BOOL"
+        },
+        {
+          "AttributeName": "Poliomyelitis",
+          "AttributeType": "BOOL"
+        },
+        {
+          "AttributeName": "Measles",
+          "AttributeType": "BOOL"
+        },
+        {
+          "AttributeName": "Mumps",
+          "AttributeType": "BOOL"
+        },
+        {
+          "AttributeName": "Rubelia",
+          "AttributeType": "BOOL"
+        },
+        {
+          "AttributeName": "Physician",
+          "AttributeType": "S"
+        },
+        {
+          "AttributeName": "Vaccination Against",
+          "AttributeType": "S"
+        }
+      ],
+      "TableData": [
+        {
+          "PatientID": {
+            "N": "1"
+          },
+          "VaccinationID": {
+            "N": "1"
+          },
+          "Date": {
+            "S": "19.09.2022"
+          },
+          "Manufacturer": {
+            "S": "Comirnaty"
+          },
+          "Batch Nr": {
+            "S": "FE6875"
+          },
+          "Physician": {
+            "S": "Dr.med R.Müller"
+          },
+          "Vaccination Against": {
+            "S": "Covid19"
+          }
+        }
+      ],
+      "DataAccess": {
+        "MySql": {}
+      },
+      "BillingMode": "PROVISIONED",
+      "ProvisionedCapacitySettings": {
+        "ProvisionedThroughput": {
+          "ReadCapacityUnits": 5,
+          "WriteCapacityUnits": 5
+        },
+        "AutoScalingRead": {
+          "ScalableTargetRequest": {
+            "MinCapacity": 1,
+            "MaxCapacity": 10,
+            "ServiceRole": "AWSServiceRoleForApplicationAutoScaling_DynamoDBTable"
+          },
+          "ScalingPolicyConfiguration": {
+            "TargetValue": 70
+          }
+        },
+        "AutoScalingWrite": {
+          "ScalableTargetRequest": {
+            "MinCapacity": 1,
+            "MaxCapacity": 10,
+            "ServiceRole": "AWSServiceRoleForApplicationAutoScaling_DynamoDBTable"
+          },
+          "ScalingPolicyConfiguration": {
+            "TargetValue": 70
+          }
+        }
+      }
+    },
+    {
+      "TableName": "Clearance",
+      "KeyAttributes": {
+        "PartitionKey": {
+          "AttributeName": "PatientID",
+          "AttributeType": "N"
+        },
+        "SortKey": {
+          "AttributeName": "PractitionerID",
+          "AttributeType": "N"
+        }
+      },
+      "NonKeyAttributes": [
+        {
+          "AttributeName": "ClearanceMap",
+          "AttributeType": "M"
+        }
+      ],
+      "TableData": [
+        {
+          "PatientID": {
+            "N": "1"
+          },
+          "PractitionerID": {
+            "N": "1"
+          },
+          "ClearanceMap": {
+            "M": {
+              "Read_vaccination": true,
+              "Write_vaccination": false
+            }
+          }
+        }
+      ],
+      "DataAccess": {
+        "MySql": {}
+      },
+      "BillingMode": "PROVISIONED",
+      "ProvisionedCapacitySettings": {
+        "ProvisionedThroughput": {
+          "ReadCapacityUnits": 5,
+          "WriteCapacityUnits": 5
+        },
+        "AutoScalingRead": {
+          "ScalableTargetRequest": {
+            "MinCapacity": 1,
+            "MaxCapacity": 10,
+            "ServiceRole": "AWSServiceRoleForApplicationAutoScaling_DynamoDBTable"
+          },
+          "ScalingPolicyConfiguration": {
+            "TargetValue": 70
+          }
+        },
+        "AutoScalingWrite": {
+          "ScalableTargetRequest": {
+            "MinCapacity": 1,
+            "MaxCapacity": 10,
+            "ServiceRole": "AWSServiceRoleForApplicationAutoScaling_DynamoDBTable"
+          },
+          "ScalingPolicyConfiguration": {
+            "TargetValue": 70
+          }
+        }
+      }
+    },
+    {
+      "TableName": "Practitioner",
+      "KeyAttributes": {
+        "PartitionKey": {
+          "AttributeName": "PractitionerID",
+          "AttributeType": "N"
+        }
+      },
+      "NonKeyAttributes": [
+        {
+          "AttributeName": "Name",
+          "AttributeType": "S"
+        },
+        {
+          "AttributeName": "Surname",
+          "AttributeType": "S"
+        },
+        {
+          "AttributeName": "Medical speciality",
+          "AttributeType": "S"
+        },
+        {
+          "AttributeName": "Street",
+          "AttributeType": "S"
+        },
+        {
+          "AttributeName": "City",
+          "AttributeType": "S"
+        },
+        {
+          "AttributeName": "Postal code",
+          "AttributeType": "S"
+        },
+        {
+          "AttributeName": "Phone number",
+          "AttributeType": "S"
+        },
+        {
+          "AttributeName": "Email",
+          "AttributeType": "S"
+        }
+      ],
+      "TableData": [
+        {
+          "PractitionerID": {
+            "N": "1"
+          },
+          "Name": {
+            "S": "Müller"
+          },
+          "Surname": {
+            "S": "Ralf"
+          },
+          "Medical speciality": {
+            "S": "General practitioner"
+          },
+          "Street": {
+            "S": "Valid Street"
+          },
+          "City": {
+            "S": "Valid City"
+          },
+          "Postal code": {
+            "S": "Valid Code"
+          },
+          "Phone number": {
+            "S": "Valid Phone Number"
+          }
+        }
+      ],
+      "DataAccess": {
+        "MySql": {}
+      },
+      "BillingMode": "PROVISIONED",
+      "ProvisionedCapacitySettings": {
+        "ProvisionedThroughput": {
+          "ReadCapacityUnits": 5,
+          "WriteCapacityUnits": 5
+        },
+        "AutoScalingRead": {
+          "ScalableTargetRequest": {
+            "MinCapacity": 1,
+            "MaxCapacity": 10,
+            "ServiceRole": "AWSServiceRoleForApplicationAutoScaling_DynamoDBTable"
+          },
+          "ScalingPolicyConfiguration": {
+            "TargetValue": 70
+          }
+        },
+        "AutoScalingWrite": {
+          "ScalableTargetRequest": {
+            "MinCapacity": 1,
+            "MaxCapacity": 10,
+            "ServiceRole": "AWSServiceRoleForApplicationAutoScaling_DynamoDBTable"
+          },
+          "ScalingPolicyConfiguration": {
+            "TargetValue": 70
+          }
+        }
+      }
+    },
+    {
+      "TableName": "Patient",
+      "KeyAttributes": {
+        "PartitionKey": {
+          "AttributeName": "PatientID",
+          "AttributeType": "N"
+        }
+      },
+      "NonKeyAttributes": [
+        {
+          "AttributeName": "Name",
+          "AttributeType": "S"
+        },
+        {
+          "AttributeName": "Surname",
+          "AttributeType": "S"
+        },
+        {
+          "AttributeName": "Street",
+          "AttributeType": "S"
+        },
+        {
+          "AttributeName": "City",
+          "AttributeType": "S"
+        },
+        {
+          "AttributeName": "Postal Code",
+          "AttributeType": "S"
+        },
+        {
+          "AttributeName": "Phone Number",
+          "AttributeType": "S"
+        },
+        {
+          "AttributeName": "Email",
+          "AttributeType": "S"
+        }
+      ],
+      "TableData": [
+        {
+          "PatientID": {
+            "N": "1"
+          },
+          "Name": {
+            "S": "Boehmer"
+          },
+          "Surname": {
+            "S": "Marvin"
+          },
+          "Street": {
+            "S": "Paul-Wagner Straße"
+          },
+          "City": {
+            "S": "Darmstadt"
+          },
+          "Postal Code": {
+            "S": "64285"
+          },
+          "Phone Number": {
+            "S": "0151-27050434"
+          },
+          "Email": {
+            "S": "marvinbhmer10@yahoo.de"
+          }
+        }
+      ],
+      "DataAccess": {
+        "MySql": {}
+      },
+      "BillingMode": "PROVISIONED",
+      "ProvisionedCapacitySettings": {
+        "ProvisionedThroughput": {
+          "ReadCapacityUnits": 5,
+          "WriteCapacityUnits": 5
+        },
+        "AutoScalingRead": {
+          "ScalableTargetRequest": {
+            "MinCapacity": 1,
+            "MaxCapacity": 10,
+            "ServiceRole": "AWSServiceRoleForApplicationAutoScaling_DynamoDBTable"
+          },
+          "ScalingPolicyConfiguration": {
+            "TargetValue": 70
+          }
+        },
+        "AutoScalingWrite": {
+          "ScalableTargetRequest": {
+            "MinCapacity": 1,
+            "MaxCapacity": 10,
+            "ServiceRole": "AWSServiceRoleForApplicationAutoScaling_DynamoDBTable"
+          },
+          "ScalingPolicyConfiguration": {
+            "TargetValue": 70
+          }
+        }
+      }
+    }
+  ]
+}

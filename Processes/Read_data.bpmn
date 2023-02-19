@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_0858pba" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.6.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="1.3.0">
+  <bpmn:process id="Read_data" name="Read data" isExecutable="true">
+    <bpmn:startEvent id="Event_0pcmihz" name="Data readout request">
+      <bpmn:outgoing>Flow_1mfginp</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:serviceTask id="Check_access_rights" name="Check access rights">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="Check_access_rights" />
+        <zeebe:ioMapping>
+          <zeebe:input source="=Request" target="Request" />
+        </zeebe:ioMapping>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0erx8ar</bpmn:incoming>
+      <bpmn:outgoing>Flow_02yd1ln</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="Return_read_data" name="Return read data">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="Return_read_data" />
+        <zeebe:ioMapping>
+          <zeebe:input source="=Request" target="Request" />
+        </zeebe:ioMapping>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_08nfart</bpmn:incoming>
+      <bpmn:incoming>Flow_02yd1ln</bpmn:incoming>
+      <bpmn:outgoing>Flow_1p5u55m</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:endEvent id="Event_0bpiuss">
+      <bpmn:incoming>Flow_1p5u55m</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:serviceTask id="Check_access_validity" name="Check request validity">
+      <bpmn:extensionElements>
+        <zeebe:ioMapping>
+          <zeebe:input source="=Request" target="Request" />
+        </zeebe:ioMapping>
+        <zeebe:taskDefinition type="Check_request_validity" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1mfginp</bpmn:incoming>
+      <bpmn:outgoing>Flow_18wfr5f</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_1mfginp" sourceRef="Event_0pcmihz" targetRef="Check_access_validity" />
+    <bpmn:sequenceFlow id="Flow_02yd1ln" sourceRef="Check_access_rights" targetRef="Return_read_data" />
+    <bpmn:sequenceFlow id="Flow_1p5u55m" sourceRef="Return_read_data" targetRef="Event_0bpiuss" />
+    <bpmn:sequenceFlow id="Flow_18wfr5f" sourceRef="Check_access_validity" targetRef="Gateway_15edraz" />
+    <bpmn:subProcess id="Activity_1hyumyq" triggeredByEvent="true">
+      <bpmn:startEvent id="Event_0euzvri">
+        <bpmn:outgoing>Flow_0hgu1ib</bpmn:outgoing>
+        <bpmn:errorEventDefinition id="ErrorEventDefinition_1lkfsdw" errorRef="Error_0tdhwq6" />
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="Handle_errors" name="Handle Errors">
+        <bpmn:extensionElements>
+          <zeebe:taskDefinition type="Handle_errors" />
+        </bpmn:extensionElements>
+        <bpmn:incoming>Flow_0hgu1ib</bpmn:incoming>
+        <bpmn:outgoing>Flow_0ukz192</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:endEvent id="Event_0k34w4m">
+        <bpmn:incoming>Flow_0ukz192</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:sequenceFlow id="Flow_0hgu1ib" sourceRef="Event_0euzvri" targetRef="Handle_errors" />
+      <bpmn:sequenceFlow id="Flow_0ukz192" sourceRef="Handle_errors" targetRef="Event_0k34w4m" />
+    </bpmn:subProcess>
+    <bpmn:exclusiveGateway id="Gateway_15edraz" name="Patient requester or requested table Practitioner?" default="Flow_0erx8ar">
+      <bpmn:incoming>Flow_18wfr5f</bpmn:incoming>
+      <bpmn:outgoing>Flow_08nfart</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0erx8ar</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_08nfart" name="yes" sourceRef="Gateway_15edraz" targetRef="Return_read_data">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=Request.requester="Patient" or Request.requestTable=
+"Practitioner"</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_0erx8ar" name="no" sourceRef="Gateway_15edraz" targetRef="Check_access_rights" />
+  </bpmn:process>
+  <bpmn:error id="Error_0tdhwq6" name="General_Error" errorCode="General_Error" />
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Read_data">
+      <bpmndi:BPMNShape id="BPMNShape_0vpagwi" bpmnElement="Event_0pcmihz">
+        <dc:Bounds x="172" y="462" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="158" y="505" width="64" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0ppjrau" bpmnElement="Check_access_rights">
+        <dc:Bounds x="695" y="440" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_1geegdu" bpmnElement="Return_read_data">
+        <dc:Bounds x="910" y="440" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0m6qm1w" bpmnElement="Event_0bpiuss">
+        <dc:Bounds x="1112" y="462" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_10720cx" bpmnElement="Check_access_validity">
+        <dc:Bounds x="310" y="440" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1d8eejh_di" bpmnElement="Activity_1hyumyq" isExpanded="true">
+        <dc:Bounds x="480" y="80" width="530" height="200" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1e6pxbj_di" bpmnElement="Event_0euzvri">
+        <dc:Bounds x="520" y="162" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0zv7ine_di" bpmnElement="Handle_errors">
+        <dc:Bounds x="660" y="140" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0k34w4m_di" bpmnElement="Event_0k34w4m">
+        <dc:Bounds x="872" y="162" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0hgu1ib_di" bpmnElement="Flow_0hgu1ib">
+        <di:waypoint x="556" y="180" />
+        <di:waypoint x="660" y="180" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0ukz192_di" bpmnElement="Flow_0ukz192">
+        <di:waypoint x="760" y="180" />
+        <di:waypoint x="872" y="180" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Gateway_15edraz_di" bpmnElement="Gateway_15edraz" isMarkerVisible="true">
+        <dc:Bounds x="515" y="455" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="497" y="512" width="89" height="40" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_1e7budw" bpmnElement="Flow_1mfginp">
+        <di:waypoint x="208" y="480" />
+        <di:waypoint x="310" y="480" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_1vw9uut" bpmnElement="Flow_02yd1ln">
+        <di:waypoint x="795" y="480" />
+        <di:waypoint x="910" y="480" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_1dudq4o" bpmnElement="Flow_1p5u55m">
+        <di:waypoint x="1010" y="480" />
+        <di:waypoint x="1112" y="480" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_107v09m" bpmnElement="Flow_18wfr5f">
+        <di:waypoint x="410" y="480" />
+        <di:waypoint x="515" y="480" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_08nfart_di" bpmnElement="Flow_08nfart">
+        <di:waypoint x="540" y="455" />
+        <di:waypoint x="540" y="370" />
+        <di:waypoint x="960" y="370" />
+        <di:waypoint x="960" y="440" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="742" y="352" width="18" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0erx8ar_di" bpmnElement="Flow_0erx8ar">
+        <di:waypoint x="565" y="480" />
+        <di:waypoint x="695" y="480" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="624" y="462" width="13" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

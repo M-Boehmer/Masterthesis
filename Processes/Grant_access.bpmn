@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_0le6vaj" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.2.0">
+  <bpmn:message id="Message_1cvddvh" name="Zugriffsfreigabe_Patient" />
+  <bpmn:message id="Message_1e6s0as" name="Cancle indefinite access">
+    <bpmn:extensionElements>
+      <zeebe:subscription correlationKey="=Cancle_indefinite_access" />
+    </bpmn:extensionElements>
+  </bpmn:message>
+  <bpmn:process id="Process_Vpdp" name="Access_granting" isExecutable="true">
+    <bpmn:documentation>Patient disclosure persepective</bpmn:documentation>
+    <bpmn:endEvent id="Event_12j3g4z">
+      <bpmn:incoming>Flow_1p4ah5e</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:serviceTask id="Activity_0j618a0" name="Grant access rights">
+      <bpmn:incoming>Flow_1ndcj0g</bpmn:incoming>
+      <bpmn:outgoing>Flow_1p4ah5e</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="Activity_131wzyk" name="Check existing Access rights">
+      <bpmn:extensionElements>
+        <zeebe:ioMapping>
+          <zeebe:output source="=access_rights" target="access_rights" />
+        </zeebe:ioMapping>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1ju4pvy</bpmn:incoming>
+      <bpmn:outgoing>Flow_1ndcj0g</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:endEvent id="Event_09exp5s">
+      <bpmn:incoming>Flow_0d9x48p</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:serviceTask id="Activity_1u7tcd0" name="Check access validity" default="Flow_1ju4pvy">
+      <bpmn:extensionElements>
+        <zeebe:ioMapping>
+          <zeebe:input source="=Treating_healthcare_professional" target="Treating_healthcare_professional" />
+        </zeebe:ioMapping>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0eanktz</bpmn:incoming>
+      <bpmn:outgoing>Flow_0d9x48p</bpmn:outgoing>
+      <bpmn:outgoing>Flow_1ju4pvy</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:startEvent id="Event_0z4covx" name="Share Request">
+      <bpmn:outgoing>Flow_0eanktz</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_1p4ah5e" sourceRef="Activity_0j618a0" targetRef="Event_12j3g4z" />
+    <bpmn:sequenceFlow id="Flow_1ndcj0g" sourceRef="Activity_131wzyk" targetRef="Activity_0j618a0" />
+    <bpmn:sequenceFlow id="Flow_0d9x48p" name="Access denied" sourceRef="Activity_1u7tcd0" targetRef="Event_09exp5s">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=Validity=Not_Valid</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_1ju4pvy" sourceRef="Activity_1u7tcd0" targetRef="Activity_131wzyk" />
+    <bpmn:sequenceFlow id="Flow_0eanktz" sourceRef="Event_0z4covx" targetRef="Activity_1u7tcd0" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_Vpdp">
+      <bpmndi:BPMNEdge id="Flow_0eanktz_di" bpmnElement="Flow_0eanktz">
+        <di:waypoint x="208" y="120" />
+        <di:waypoint x="260" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1ju4pvy_di" bpmnElement="Flow_1ju4pvy">
+        <di:waypoint x="360" y="120" />
+        <di:waypoint x="420" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0d9x48p_di" bpmnElement="Flow_0d9x48p">
+        <di:waypoint x="310" y="160" />
+        <di:waypoint x="310" y="230" />
+        <di:waypoint x="422" y="230" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="314" y="213" width="72" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1ndcj0g_di" bpmnElement="Flow_1ndcj0g">
+        <di:waypoint x="520" y="120" />
+        <di:waypoint x="570" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1p4ah5e_di" bpmnElement="Flow_1p4ah5e">
+        <di:waypoint x="670" y="120" />
+        <di:waypoint x="722" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Event_0z4covx_di" bpmnElement="Event_0z4covx">
+        <dc:Bounds x="172" y="102" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="154" y="145" width="74" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0rhn3cw_di" bpmnElement="Activity_1u7tcd0">
+        <dc:Bounds x="260" y="80" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_09exp5s_di" bpmnElement="Event_09exp5s">
+        <dc:Bounds x="422" y="212" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_041u3mu_di" bpmnElement="Activity_131wzyk">
+        <dc:Bounds x="420" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_11a98y2_di" bpmnElement="Activity_0j618a0">
+        <dc:Bounds x="570" y="80" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_12j3g4z_di" bpmnElement="Event_12j3g4z">
+        <dc:Bounds x="722" y="102" width="36" height="36" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

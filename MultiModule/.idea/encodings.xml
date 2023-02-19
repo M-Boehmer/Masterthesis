@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/Frontend/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/KafkaZeebeConnector/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/core/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/worker1/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/worker2/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/worker3/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/worker4/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/worker5/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/worker6/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/worker7/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/workerI1/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/workerI2/src/main/java" charset="UTF-8" />
+  </component>
+</project>

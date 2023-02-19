@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_1sj8tun" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.6.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="1.3.0">
+  <bpmn:process id="Create_data" name="Create Data" isExecutable="true">
+    <bpmn:serviceTask id="Save_data" name="Save data to database">
+      <bpmn:documentation>Creates a new empty database object using the patient data.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="Create_data" />
+        <zeebe:ioMapping>
+          <zeebe:input source="=Request" target="Request" />
+        </zeebe:ioMapping>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1rkn7id</bpmn:incoming>
+      <bpmn:incoming>Flow_0nef7h3</bpmn:incoming>
+      <bpmn:outgoing>Flow_0l81tye</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:endEvent id="Event_0i5dac3">
+      <bpmn:incoming>Flow_0l81tye</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0l81tye" sourceRef="Save_data" targetRef="Event_0i5dac3" />
+    <bpmn:serviceTask id="Check_access_validity" name="Check request validity">
+      <bpmn:extensionElements>
+        <zeebe:ioMapping>
+          <zeebe:input source="=Request" target="Request" />
+        </zeebe:ioMapping>
+        <zeebe:taskDefinition type="Check_request_validity" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0zxtmyx</bpmn:incoming>
+      <bpmn:outgoing>Flow_18wfr5f</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_18wfr5f" sourceRef="Check_access_validity" targetRef="Gateway_113mcce" />
+    <bpmn:sequenceFlow id="Flow_0zxtmyx" sourceRef="StartEvent_1" targetRef="Check_access_validity" />
+    <bpmn:serviceTask id="Check_access_rights" name="Check access rights">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="Check_access_rights" />
+        <zeebe:ioMapping>
+          <zeebe:input source="=Request" target="Request" />
+        </zeebe:ioMapping>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1t9qbuw</bpmn:incoming>
+      <bpmn:outgoing>Flow_0nef7h3</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_0nef7h3" sourceRef="Check_access_rights" targetRef="Save_data" />
+    <bpmn:subProcess id="Activity_1hyumyq" triggeredByEvent="true">
+      <bpmn:serviceTask id="Handle_errors" name="Handle errors">
+        <bpmn:extensionElements>
+          <zeebe:taskDefinition type="Handle_errors" />
+        </bpmn:extensionElements>
+        <bpmn:incoming>Flow_0hgu1ib</bpmn:incoming>
+        <bpmn:outgoing>Flow_0ukz192</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:endEvent id="Event_0k34w4m">
+        <bpmn:incoming>Flow_0ukz192</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:sequenceFlow id="Flow_0hgu1ib" sourceRef="Event_0euzvri" targetRef="Handle_errors" />
+      <bpmn:sequenceFlow id="Flow_0ukz192" sourceRef="Handle_errors" targetRef="Event_0k34w4m" />
+      <bpmn:startEvent id="Event_0euzvri">
+        <bpmn:outgoing>Flow_0hgu1ib</bpmn:outgoing>
+        <bpmn:errorEventDefinition id="ErrorEventDefinition_19ck1it" errorRef="Error_0tdhwq6" />
+      </bpmn:startEvent>
+    </bpmn:subProcess>
+    <bpmn:exclusiveGateway id="Gateway_113mcce" name="Add patient or vaccination?">
+      <bpmn:incoming>Flow_18wfr5f</bpmn:incoming>
+      <bpmn:outgoing>Flow_1t9qbuw</bpmn:outgoing>
+      <bpmn:outgoing>Flow_1rkn7id</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_1t9qbuw" name="vaccination" sourceRef="Gateway_113mcce" targetRef="Check_access_rights">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=Request.requestTable = "Vaccination"</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_1rkn7id" name="Patient" sourceRef="Gateway_113mcce" targetRef="Save_data">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=Request.requestTable = "Patient"</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:startEvent id="StartEvent_1" name="Save data Request">
+      <bpmn:outgoing>Flow_0zxtmyx</bpmn:outgoing>
+    </bpmn:startEvent>
+  </bpmn:process>
+  <bpmn:error id="Error_0tdhwq6" name="General_Error" errorCode="General_Error" />
+  <bpmn:message id="Message_1gliaaq" name="Create_data_request" />
+  <bpmn:message id="Message_05qe3s9" name="Error">
+    <bpmn:extensionElements>
+      <zeebe:subscription correlationKey="=Error" />
+    </bpmn:extensionElements>
+  </bpmn:message>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Create_data">
+      <bpmndi:BPMNShape id="Activity_1olzflf_di" bpmnElement="Save_data">
+        <dc:Bounds x="970" y="407" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0i5dac3_di" bpmnElement="Event_0i5dac3">
+        <dc:Bounds x="1122" y="429" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_10720cx" bpmnElement="Check_access_validity">
+        <dc:Bounds x="320" y="407" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0ppjrau" bpmnElement="Check_access_rights">
+        <dc:Bounds x="750" y="407" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1d8eejh_di" bpmnElement="Activity_1hyumyq" isExpanded="true">
+        <dc:Bounds x="640" y="80" width="530" height="200" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0zv7ine_di" bpmnElement="Handle_errors">
+        <dc:Bounds x="820" y="140" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0k34w4m_di" bpmnElement="Event_0k34w4m">
+        <dc:Bounds x="1032" y="162" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0l11vva_di" bpmnElement="Event_0euzvri">
+        <dc:Bounds x="680" y="162" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0hgu1ib_di" bpmnElement="Flow_0hgu1ib">
+        <di:waypoint x="716" y="180" />
+        <di:waypoint x="820" y="180" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0ukz192_di" bpmnElement="Flow_0ukz192">
+        <di:waypoint x="920" y="180" />
+        <di:waypoint x="1032" y="180" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Gateway_113mcce_di" bpmnElement="Gateway_113mcce" isMarkerVisible="true">
+        <dc:Bounds x="545" y="422" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="495" y="406" width="69" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0ftz2ts_di" bpmnElement="StartEvent_1">
+        <dc:Bounds x="162" y="429" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="155" y="392" width="50" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0l81tye_di" bpmnElement="Flow_0l81tye">
+        <di:waypoint x="1070" y="447" />
+        <di:waypoint x="1122" y="447" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_107v09m" bpmnElement="Flow_18wfr5f">
+        <di:waypoint x="420" y="447" />
+        <di:waypoint x="545" y="447" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0zxtmyx_di" bpmnElement="Flow_0zxtmyx">
+        <di:waypoint x="198" y="447" />
+        <di:waypoint x="320" y="447" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0nef7h3_di" bpmnElement="Flow_0nef7h3">
+        <di:waypoint x="850" y="447" />
+        <di:waypoint x="970" y="447" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1t9qbuw_di" bpmnElement="Flow_1t9qbuw">
+        <di:waypoint x="595" y="447" />
+        <di:waypoint x="750" y="447" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="629" y="429" width="56" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1rkn7id_di" bpmnElement="Flow_1rkn7id">
+        <di:waypoint x="570" y="422" />
+        <di:waypoint x="570" y="340" />
+        <di:waypoint x="1020" y="340" />
+        <di:waypoint x="1020" y="407" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="778" y="322" width="35" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

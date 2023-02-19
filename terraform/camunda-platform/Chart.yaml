@@ -1,0 +1,74 @@
+annotations:
+  artifacthub.io/changes: |
+    - kind: added
+      description: "support startupProbe, readinessProbe, and livenessProbe"
+    - kind: changed
+      description: "add operate default actuator endpoints"
+    - kind: changed
+      description: "add tasklist default actuator endpoints"
+  artifacthub.io/containsSecurityUpdates: "false"
+  artifacthub.io/links: |
+    - name: Camunda Platform 8 docs
+      url: https://docs.camunda.io/
+    - name: Camunda Platform 8 Self-Managed docs
+      url: https://docs.camunda.io/docs/self-managed/about-self-managed/
+    - name: Camunda Platform 8 Self-Managed Helm charts
+      url: https://github.com/camunda/camunda-platform-helm
+apiVersion: v2
+appVersion: 8.1.x
+dependencies:
+- condition: identity.enabled
+  import-values:
+  - child: image
+    parent: global.identity.image
+  name: identity
+  repository: ""
+  version: 8.1.4
+- condition: operate.enabled
+  name: operate
+  repository: ""
+  version: 8.1.4
+- condition: optimize.enabled
+  name: optimize
+  repository: ""
+  version: 8.1.4
+- condition: tasklist.enabled
+  name: tasklist
+  repository: ""
+  version: 8.1.4
+- condition: zeebe.enabled
+  name: zeebe
+  repository: ""
+  version: 8.1.4
+- condition: zeebe.enabled
+  name: zeebe-gateway
+  repository: ""
+  version: 8.1.4
+- condition: elasticsearch.enabled
+  name: elasticsearch
+  repository: https://helm.elastic.co
+  version: 7.17.1
+- name: common
+  repository: https://charts.bitnami.com/bitnami
+  version: 2.x.x
+description: 'Camunda Platform 8 Self-Managed Helm charts. Camunda''s process automation
+  platform allows developers to design, automate and improve processes. '
+home: https://docs.camunda.io/docs/self-managed/overview/
+icon: https://helm.camunda.io/imgs/camunda.svg
+keywords:
+- bpm
+- bpmn
+- camunda-platform
+- dmn
+- process-engine
+- workflow
+maintainers:
+- email: christopher.zell@camunda.com
+  name: Zelldon
+- email: ahmed.abouzaid@camunda.com
+  name: aabouzaid
+name: camunda-platform
+sources:
+- https://github.com/camunda/camunda-platform-helm
+type: application
+version: 8.1.4
