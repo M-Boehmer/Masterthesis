@@ -7,18 +7,27 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="core" />
         <module name="CreateData" />
         <module name="ErrorHandling" />
         <module name="DeleteData" />
+        <module name="RemoveAccessRights" />
+        <module name="CheckRequestValidity" />
+        <module name="worker6" />
+        <module name="core" />
+        <module name="worker7" />
         <module name="Frontend" />
         <module name="UpdateData" />
-        <module name="RemoveAccessRights" />
         <module name="GrantAccessRights" />
         <module name="KafkaZeebeConnector" />
+        <module name="worker1" />
+        <module name="worker2" />
+        <module name="workerI2" />
         <module name="ReadData" />
-        <module name="CheckRequestValidity" />
+        <module name="workerI1" />
+        <module name="worker3" />
+        <module name="worker4" />
         <module name="CheckAccessRights" />
+        <module name="worker5" />
       </profile>
     </annotationProcessing>
   </component>
@@ -37,6 +46,15 @@
       <module name="UpdateData" options="-parameters" />
       <module name="core" options="-parameters" />
       <module name="ePA Vaccination Passport Application" options="-parameters" />
+      <module name="worker1" options="-parameters" />
+      <module name="worker2" options="-parameters" />
+      <module name="worker3" options="-parameters" />
+      <module name="worker4" options="-parameters" />
+      <module name="worker5" options="-parameters" />
+      <module name="worker6" options="-parameters" />
+      <module name="worker7" options="-parameters" />
+      <module name="workerI1" options="-parameters" />
+      <module name="workerI2" options="-parameters" />
     </option>
   </component>
 </project>
