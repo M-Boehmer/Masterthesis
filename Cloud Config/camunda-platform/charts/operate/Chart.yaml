@@ -1,0 +1,6 @@
+apiVersion: v2
+description: Operate Helm Chart for Kubernetes
+icon: https://helm.camunda.io/imgs/camunda.svg
+name: operate
+type: application
+version: 8.1.4

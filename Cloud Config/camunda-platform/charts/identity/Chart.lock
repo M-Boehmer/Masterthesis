@@ -1,0 +1,6 @@
+dependencies:
+- name: keycloak
+  repository: https://helm.camunda.io
+  version: 7.1.6
+digest: sha256:0f49b99736c483d60acc54bd89910b276164545eefdaf726d8f866d6fd250997
+generated: "2023-01-12T07:24:38.47378715Z"

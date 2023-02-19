@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="core" />
+        <module name="CreateData" />
+        <module name="ErrorHandling" />
+        <module name="DeleteData" />
+        <module name="Frontend" />
+        <module name="UpdateData" />
+        <module name="RemoveAccessRights" />
+        <module name="GrantAccessRights" />
+        <module name="KafkaZeebeConnector" />
+        <module name="ReadData" />
+        <module name="CheckRequestValidity" />
+        <module name="CheckAccessRights" />
+      </profile>
+    </annotationProcessing>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="CheckAccessRights" options="-parameters" />
+      <module name="CheckRequestValidity" options="-parameters" />
+      <module name="CreateData" options="-parameters" />
+      <module name="DeleteData" options="-parameters" />
+      <module name="ErrorHandling" options="-parameters" />
+      <module name="Frontend" options="-parameters" />
+      <module name="GrantAccessRights" options="-parameters" />
+      <module name="KafkaZeebeConnector" options="-parameters" />
+      <module name="ReadData" options="-parameters" />
+      <module name="RemoveAccessRights" options="-parameters" />
+      <module name="UpdateData" options="-parameters" />
+      <module name="core" options="-parameters" />
+      <module name="ePA Vaccination Passport Application" options="-parameters" />
+    </option>
+  </component>
+</project>
